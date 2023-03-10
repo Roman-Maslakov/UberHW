@@ -18,19 +18,19 @@ string[,] Spiralizator(int circles, string[,] arr)
     int cell = 0;
     int i, j;
     int finish0 = arr.GetLength(0);
-    int finifh1 = arr.GetLength(1);
+    int finish1 = arr.GetLength(1);
     while (circles > 0)
     {
         j = startPosition;
         i = startPosition;
-        while (j < finifh1)
+        while (j < finish1)
         {
             cell++;
             arr[i, j] = Fill(cell);
             j++;
         }
         j--;
-        cell--;
+        i++;
         while (i < finish0)
         {
             cell++;
@@ -38,7 +38,7 @@ string[,] Spiralizator(int circles, string[,] arr)
             i++;
         }
         i--;
-        cell--;
+        j--;
         while (j >= startPosition)
         {
             cell++;
@@ -46,7 +46,7 @@ string[,] Spiralizator(int circles, string[,] arr)
             j--;
         }
         j++;
-        cell--;
+        i--;
         while (i >= startPosition + 1)
         {
             cell++;
@@ -55,7 +55,7 @@ string[,] Spiralizator(int circles, string[,] arr)
         }
         startPosition++;
         circles--;
-        finifh1--;
+        finish1--;
         finish0--;
     }
     return arr;
