@@ -5,24 +5,41 @@
 11 16 15 06
 10 09 08 07 */
 
-// работает только для квадратного массива, не знаю как решить проблему перезаписи центральной
-// линии если массив задается прямоугольным
+// кажется работает для любого размера, боюсь решение мудренное в плохом смысле
 
 string[,] spiralArr = CreateArray();
 spiralArr = Spiralizator(FindCircles(spiralArr), spiralArr);
 PrintArray(spiralArr);
 
-string[,] Spiralizator(int circles, string[,] arr)
+string[,] Spiralizator(int[] circles, string[,] arr)
 {
     int startPosition = 0;
     int cell = 0;
     int i, j;
     int finish0 = arr.GetLength(0);
     int finish1 = arr.GetLength(1);
-    while (circles > 0)
+    while (circles[2] > 0)
     {
         j = startPosition;
         i = startPosition;
+        if (circles[2] == 1 && circles[1] == 1 && circles[0] == 1)
+        {
+            for (i = startPosition; i < finish0; i++)
+            {
+                cell++;
+                arr[i, j] = Fill(cell);
+            }
+            break;
+        }
+        else if (circles[2] == 1 && circles[1] == 1 && circles[0] == 0)
+        {
+            for (j = startPosition; j < finish1; j++)
+            {
+                cell++;
+                arr[i, j] = Fill(cell);
+            }
+            break;
+        }
         while (j < finish1)
         {
             cell++;
@@ -54,20 +71,37 @@ string[,] Spiralizator(int circles, string[,] arr)
             i--;
         }
         startPosition++;
-        circles--;
+        circles[2]--;
         finish1--;
         finish0--;
     }
     return arr;
 }
 
-int FindCircles(string[,] arr)
+int[] FindCircles(string[,] arr)
 {
-    int circles = 0;
-    if (arr.GetLength(0) > arr.GetLength(1)) circles = arr.GetLength(1);
-    else circles = arr.GetLength(0);
-    if (circles % 2 != 0) circles = circles / 2 + 1;
-    else circles = circles / 2;
+    int[] circles = new int[3]; // для инфо. первое число передает чего меньше(строк или стобцов, от этого зависит движение), 
+                                // второе число передает четность, а третье число говорит сколько кругов делать.
+    if (arr.GetLength(0) > arr.GetLength(1)) 
+    {
+        circles[0] = 1;
+        circles[2] = arr.GetLength(1);
+    }
+    else 
+    {
+        circles[0] = 0;
+        circles[2] = arr.GetLength(0);
+    }
+    if (circles[2] % 2 != 0) 
+    {
+        circles[2] = circles[2] / 2 + 1;
+        circles[1] = 1;
+    }
+    else 
+    {
+        circles[2] = circles[2] / 2;
+        circles[1] = 0;
+    }
     return circles;
 }
 
