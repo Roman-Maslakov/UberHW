@@ -22,7 +22,8 @@ string[,] Spiralizator(int[] circles, string[,] arr)
     {
         j = startPosition;
         i = startPosition;
-        if (circles[2] == 1 && circles[1] == 1 && circles[0] == 1)
+        if (circles[2] == 1 && circles[1] == 1 && circles[0] == 1) // это и следующее условие ради заполнения
+                                                                   // центра прямоугольных кейсов
         {
             for (i = startPosition; i < finish0; i++)
             {
@@ -40,7 +41,7 @@ string[,] Spiralizator(int[] circles, string[,] arr)
             }
             break;
         }
-        while (j < finish1)
+        while (j < finish1) // начало основного заполнения
         {
             cell++;
             arr[i, j] = Fill(cell);
@@ -80,7 +81,8 @@ string[,] Spiralizator(int[] circles, string[,] arr)
 
 int[] FindCircles(string[,] arr)
 {
-    int[] circles = new int[3]; // для инфо. первое число передает чего меньше(строк или стобцов, от этого зависит движение), 
+    int[] circles = new int[3]; // для инфо. первое число передает чего меньше
+                                // (строк или стобцов - от этого зависит движение при заполнении центра), 
                                 // второе число передает четность, а третье число говорит сколько кругов делать.
     if (arr.GetLength(0) > arr.GetLength(1)) 
     {
